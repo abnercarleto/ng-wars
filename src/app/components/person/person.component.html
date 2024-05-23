@@ -1,0 +1,13 @@
+<mat-card class="card-person">
+  <mat-card-header>
+    <mat-card-title>{{person.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-grid-list cols="2" rowHeight="30px">
+      <ng-container *ngFor="let item of gridItems">
+        <mat-grid-tile><strong>{{item.label}}:</strong></mat-grid-tile>
+        <mat-grid-tile>{{item.value}}</mat-grid-tile>
+      </ng-container>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
