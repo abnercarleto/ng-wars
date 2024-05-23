@@ -10,6 +10,4 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'ng-wars';
-}
+export class AppComponent {}
