@@ -1,6 +1,6 @@
 export interface IManyResult<ResultType> {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: ResultType[];
+  readonly count: number;
+  readonly next: string | null;
+  readonly previous: string | null;
+  readonly results: ResultType[];
 }

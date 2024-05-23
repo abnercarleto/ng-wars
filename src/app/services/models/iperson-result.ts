@@ -1,18 +1,18 @@
 export interface IPersonResult {
-  birth_year: string;
-  eye_color: string;
-  gender: string;
-  hair_color: string;
-  height: string;
-  mass: string;
-  name: string;
-  skin_color: string;
-  homeworld: string;
-  films: string[];
-  species: string[];
-  vehicles: string[];
-  starships: string[];
-  created: string;
-  edited: string;
-  url: string;
+  readonly birth_year: string;
+  readonly eye_color: string;
+  readonly gender: string;
+  readonly hair_color: string;
+  readonly height: string;
+  readonly mass: string;
+  readonly name: string;
+  readonly skin_color: string;
+  readonly homeworld: string;
+  readonly films: string[];
+  readonly species: string[];
+  readonly vehicles: string[];
+  readonly starships: string[];
+  readonly created: string;
+  readonly edited: string;
+  readonly url: string;
 }

@@ -3,21 +3,25 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IManyResult } from './models/imany-result';
 import { IPersonResult } from './models/iperson-result';
+import { IResourceUrlsResult } from './models/iresource-urls-result';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SwapiService {
   private static readonly basePath = 'https://swapi.dev/api';
-  private static readonly peoplePath = `${SwapiService.basePath}/people`;
 
   constructor(private http: HttpClient) {}
 
-  getPeople(): Observable<IManyResult<IPersonResult>> {
-    return this.http.get<IManyResult<IPersonResult>>(SwapiService.peoplePath);
+  getResourceUrls(): Observable<IResourceUrlsResult> {
+    return this.http.get<IResourceUrlsResult>(SwapiService.basePath);
   }
 
-  getPersonById(id: number): Observable<IPersonResult> {
-    return this.http.get<IPersonResult>(`${SwapiService.peoplePath}/${id}`)
+  getPeople(peopleUrl: string): Observable<IManyResult<IPersonResult>> {
+    return this.http.get<IManyResult<IPersonResult>>(peopleUrl);
+  }
+
+  getPersonById(id: number, peopleUrl: string): Observable<IPersonResult> {
+    return this.http.get<IPersonResult>(`${peopleUrl}${id}`);
   }
 }
