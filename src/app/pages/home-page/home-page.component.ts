@@ -1,40 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+
 import { IPerson } from '../../core/models/iperson';
 import { PersonComponent } from '../../components/person/person.component';
+import { SwapiService } from '../../services/swapi.service';
+import { IResourceUrlsResult } from '../../services/models/iresource-urls-result';
+import { CommonModule } from '@angular/common';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [PersonComponent],
+  imports: [
+    PersonComponent,
+    MatGridListModule,
+    MatButtonModule,
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
-export class HomePageComponent {
-  personExample: IPerson = {
-    name: 'Luke Skywalker',
-    height: '172',
-    mass: '77',
-    hairColor: 'blond',
-    skinColor: 'fair',
-    eyeColor: 'blue',
-    birthYear: '19BBY',
-    gender: 'male',
-    homeworld: 'https://swapi.dev/api/planets/1/',
-    films: [
-      'https://swapi.dev/api/films/1/',
-      'https://swapi.dev/api/films/2/',
-      'https://swapi.dev/api/films/3/',
-      'https://swapi.dev/api/films/6/',
-    ],
-    species: [],
-    vehicles: [
-      'https://swapi.dev/api/vehicles/14/',
-      'https://swapi.dev/api/vehicles/30/',
-    ],
-    starships: [
-      'https://swapi.dev/api/starships/12/',
-      'https://swapi.dev/api/starships/22/',
-    ],
-    url: 'https://swapi.dev/api/people/1/',
-  };
+export class HomePageComponent implements OnInit {
+
+  private resources?: IResourceUrlsResult;
+
+  public constructor(private swapiService: SwapiService) {}
+
+  ngOnInit(): void {
+    this.swapiService.getResourceUrls().subscribe({
+      next: (data) => {
+        this.resources = data;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  get isPeopleMenuEnabled(): boolean {
+    return !!this.resources?.people;
+  }
+
+  get peopleUrl(): string {
+    return this.resources!.people!;
+  }
 }

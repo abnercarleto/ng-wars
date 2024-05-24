@@ -1,3 +1,13 @@
-<p>home-page works!</p>
-
-<app-person [person]="personExample"></app-person>
+<mat-grid-list cols="3" rowHeight=100px>
+  <mat-grid-tile *ngIf="isPeopleMenuEnabled">
+    <a
+        mat-fab
+        extended
+        color="primary"
+        routerLink="/people"
+        routerLinkActive="true"
+        ariaCurrentWhenActive="page" >
+      People
+    </a>
+  </mat-grid-tile>
+</mat-grid-list>

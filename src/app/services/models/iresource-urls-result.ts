@@ -1,8 +1,8 @@
 export interface IResourceUrlsResult {
-  readonly people: string;
-  readonly planets: string;
-  readonly films: string;
-  readonly species: string;
-  readonly vehicles: string;
-  readonly starships: string;
+  readonly people?: string | null;
+  readonly planets?: string | null;
+  readonly films?: string | null;
+  readonly species?: string | null;
+  readonly vehicles?: string | null;
+  readonly starships?: string | null;
 }
