@@ -8,13 +8,13 @@ import { IResourceUrlsResult } from './models/iresource-urls-result';
 @Injectable({
   providedIn: 'root',
 })
-export class SwapiService {
+export class SwapiClientService {
   private static readonly basePath = 'https://swapi.dev/api';
 
   constructor(private http: HttpClient) {}
 
   getResourceUrls(): Observable<IResourceUrlsResult> {
-    return this.http.get<IResourceUrlsResult>(SwapiService.basePath);
+    return this.http.get<IResourceUrlsResult>(SwapiClientService.basePath);
   }
 
   getPeople(peopleUrl: string): Observable<IManyResult<IPersonResult>> {

@@ -4,10 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { IPerson } from '../../core/models/iperson';
 import { PersonComponent } from '../../components/person/person.component';
-import { SwapiService } from '../../services/swapi.service';
+import { SwapiClientService } from '../../services/swapi-client.service';
 import { IResourceUrlsResult } from '../../services/models/iresource-urls-result';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { ResourceStoreService } from '../../services/resource-store.service';
 
 @Component({
   selector: 'app-home-page',
@@ -17,22 +18,21 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     MatGridListModule,
     MatButtonModule,
     CommonModule,
-    RouterOutlet,
     RouterLink,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent implements OnInit {
-
-  private resources?: IResourceUrlsResult;
-
-  public constructor(private swapiService: SwapiService) {}
+  public constructor(
+    private readonly swapiClientService: SwapiClientService,
+    private readonly resourceStoreService: ResourceStoreService,
+  ) {}
 
   ngOnInit(): void {
-    this.swapiService.getResourceUrls().subscribe({
+    this.swapiClientService.getResourceUrls().subscribe({
       next: (data) => {
-        this.resources = data;
+        this.resourceStoreService.resources = data;
       },
       error: (error) => {
         console.error(error);
@@ -41,10 +41,10 @@ export class HomePageComponent implements OnInit {
   }
 
   get isPeopleMenuEnabled(): boolean {
-    return !!this.resources?.people;
+    return !!this.resourceStoreService.people;
   }
 
   get peopleUrl(): string {
-    return this.resources!.people!;
+    return this.resourceStoreService.people!;
   }
 }
