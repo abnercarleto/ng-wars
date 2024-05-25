@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 
-import { IPerson } from '../../core/models/iperson';
 import { PersonComponent } from '../../components/person/person.component';
-import { SwapiClientService } from '../../services/swapi-client.service';
-import { IResourceUrlsResult } from '../../services/models/iresource-urls-result';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { ResourceStoreService } from '../../services/resource-store.service';
+import { RouterLink } from '@angular/router';
+import { StarWarsService } from '../../core/service/star-wars.service';
+import { Resources } from '../../core/models/resources';
 
 @Component({
   selector: 'app-home-page',
@@ -24,27 +22,19 @@ import { ResourceStoreService } from '../../services/resource-store.service';
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent implements OnInit {
+  resources?: Resources;
   public constructor(
-    private readonly swapiClientService: SwapiClientService,
-    private readonly resourceStoreService: ResourceStoreService,
+    private readonly starWarsService: StarWarsService,
   ) {}
 
   ngOnInit(): void {
-    this.swapiClientService.getResourceUrls().subscribe({
-      next: (data) => {
-        this.resourceStoreService.resources = data;
-      },
-      error: (error) => {
-        console.error(error);
-      },
+    this.starWarsService.findResources().subscribe({
+      next: (value) => this.resources = value,
+      error: (error) => console.error(error)
     });
   }
 
   get isPeopleMenuEnabled(): boolean {
-    return !!this.resourceStoreService.people;
-  }
-
-  get peopleUrl(): string {
-    return this.resourceStoreService.people!;
+    return this.resources?.people || false;
   }
 }
